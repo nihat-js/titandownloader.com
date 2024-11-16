@@ -1,4 +1,3 @@
-import Pinterest from "../../services/Pinterest"
 export async function GET() {
 
   // let result
