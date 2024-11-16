@@ -2,9 +2,10 @@
 
 import Pinterest from '@/app/services/Pinterest';
 import axios from 'axios';
-import { NextApiRequest, NextApiResponse } from 'next';
+import {  NextApiResponse } from 'next';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(req: NextApiRequest, res: NextApiResponse<any>,) {
+export async function GET(req: NextRequest, res: NextResponse<any>,) {
   const url = new URL(req.url as string).searchParams.get('url'); 
 
 
