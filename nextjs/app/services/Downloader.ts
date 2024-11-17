@@ -16,12 +16,12 @@ export class Downloader implements IDownloader {
     this.#url = url
   }
 
-  async getSource() {
+  async getSource() : Promise<any> {
     const domain = new URL(this.#url).hostname.toLowerCase()
     let result
     if (domain.includes('tiktok.com')) {
       result = await downloadFromTiktok(this.#url);
-    } else if (domain.includes('pinterest.com')) {
+    } else if (domain.includes('pinterest.com') || domain.includes('pin.it')) {
       result = await downloadFromPinterest(this.#url);
     } else if (domain.includes('youtube.com') || domain.includes('youtu.be')) {
       result = await downloadFromYoutube(this.#url);

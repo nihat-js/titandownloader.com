@@ -31,11 +31,20 @@ export const sendSubscriptionPrompt = async (chatId : string) => {
 
 export async function sendImageToTelegram(chatId : string, imageUrl : string) {
   try {
-    await axios.post(TELEGRAM_API_URL, {
+    const response = await axios.post(TELEGRAM_API_URL + "/sendPhoto", {
       chat_id: chatId,
-      photo: imageUrl,
-      caption: 'Here is your Pinterest image!',
+      photo: imageUrl,  // URL of the image
+      caption: 'Here is your Pinterest image!',  // Optional caption
     });
+
+    console.log(response)
+
+    // Check for a successful response
+    if (response.data.ok) {
+      console.log('Image sent successfully!');
+    } else {
+      console.error('Failed to send image:', response.data.description);
+    }
   } catch (error) {
     console.error('Error sending image:', error);
   }

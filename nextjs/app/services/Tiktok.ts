@@ -1,30 +1,39 @@
-import playwright from 'playwright';
-
+import * as cheerio from 'cheerio'
 
 
 
 export async function downloadFromTiktok(url: string) {
   try {
 
-    const browser = await playwright.chromium.launch({headless : false})
-    const page = await browser.newPage()
-    await page.setExtraHTTPHeaders({
-      'Accept-Language': 'en-US,en;q=0.9',
-      'Accept-Encoding': 'gzip, deflate, br',
-      'Connection': 'keep-alive',
-      'Upgrade-Insecure-Requests': '1',
-      'DNT': '1', // Do Not Track header
+    let response = await fetch("https://ssstik.io/abc?url=dl", {
+      "headers": {
+        "accept": "*/*",
+        "accept-language": "en-US,en;q=0.9",
+        "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+        "hx-current-url": "https://ssstik.io/",
+        "hx-request": "true",
+        "hx-target": "target",
+        "hx-trigger": "_gcaptcha_pt",
+        "priority": "u=1, i",
+        "sec-ch-ua": "\"Chromium\";v=\"130\", \"Google Chrome\";v=\"130\", \"Not?A_Brand\";v=\"99\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-origin",
+        "Referer": "https://ssstik.io/",
+        "Referrer-Policy": "strict-origin-when-cross-origin"
+      },
+      "body": "id="+url,
+      "method": "POST"
     });
-    await page.goto(url)
-    let source, sourceElement = await page.$("source")
-    if (sourceElement) {
-      source = await sourceElement.getAttribute('src')
-    } else {
-      console.log("No element found")
-    }
+    let html = await response.text();
+    console.log(html)
+    const $ = cheerio.load(html);
+    const firstImageSrc = $('a').first().attr('src');
 
     return {
-      source: source
+      source: ""
     }
   } catch (error) {
     console.error('Error fetching the page:', error);

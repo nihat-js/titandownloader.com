@@ -1,4 +1,3 @@
-import { pupeteer } from 'pup';
 import axios from 'axios'
 import * as cheerio from 'cheerio'
 import { Downloader } from './Downloader';
@@ -9,8 +8,8 @@ import { chromium } from 'playwright';
 
 export async function downloadFromInstagram(url: string)  {
 
-  const browser = await pupeteer.launch();
-  const page = await browser.newPage();
+  // const browser = await pupeteer.launch();
+  // const page = await browser.newPage();
   
   // const browser = await chromium.launch({ headless: false });
 
