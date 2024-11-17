@@ -4,11 +4,13 @@ import { Downloader } from './Downloader';
 
 
 
-export async function downloadFromPinterest(url: string) {
+
+export async function downloadFromTiktok(url: string)  {
   try {
     const response = await axios.get(url);
+
     const $ = cheerio.load(response.data);
-    const firstImageSrc = $('img').first().attr('src');
+    const firstImageSrc = $('source').first().attr('src');
     return {
       url: firstImageSrc
     }
@@ -16,6 +18,3 @@ export async function downloadFromPinterest(url: string) {
     console.error('Error fetching the page:', error);
   }
 }
-
-// const url = 'https://www.pinterest.com/pin/AbxLdQEOr_1TTkCGEdVx_nrR_WxltINkRZBVa-rk07QfUA4RIXse2pvQkKxxqthqgWk4RFfAdLRo4_uCGFTJkao/';
-// getFirstImageSrc(url);
