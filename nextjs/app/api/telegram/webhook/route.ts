@@ -1,7 +1,6 @@
-import { Downloader } from './../../../services/Downloader';
+import { Downloader } from '../../../services/Downloader';
 // pages/api/fetchPinterestImage.js
 
-import Pinterest from '@/app/services/Pinterest';
 import { NextRequest, NextResponse } from 'next/server';
 
 
@@ -13,24 +12,24 @@ const testURLS = [
 
 export async function POST(req: NextRequest,) {
   const url = new URL(req.url as string).searchParams.get('url'); 
-
-
-
+  // if (typeof url !== 'string') {
+  //   return new Response(JSON.stringify({ error: 'URL parameter is required and must be a valid string' }), { 
+  //     status: 400,
+  //     headers: { 'Content-Type': 'application/json' }
+  //   });
+  // }
   const update =  req.body
+
+
+
   // if (!update?.message){
   //   cons
   // }
 
 
 
-  if (typeof url !== 'string') {
-    return new Response(JSON.stringify({ error: 'URL parameter is required and must be a valid string' }), { 
-      status: 400,
-      headers: { 'Content-Type': 'application/json' }
-    });
-  }
-  let downloader = new Pinterest()
-  let result = await downloader.download(url as string)
+  let downloader = new Downloader(testURLS[0])
+  let result = await downloader.getSource()
   return new Response(
     JSON.stringify(result),
     {
