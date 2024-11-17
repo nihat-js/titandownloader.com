@@ -18,30 +18,20 @@ export class Downloader implements IDownloader {
 
   async getSource() {
     const domain = new URL(this.#url).hostname.toLowerCase()
-    let source
+    let result
     if (domain.includes('tiktok.com')) {
-      source = await downloadFromTiktok(this.#url);
+      result = await downloadFromTiktok(this.#url);
     } else if (domain.includes('pinterest.com')) {
-      source = await downloadFromPinterest(this.#url);
+      result = await downloadFromPinterest(this.#url);
     } else if (domain.includes('youtube.com') || domain.includes('youtu.be')) {
-      source = await downloadFromYoutube(this.#url);
+      result = await downloadFromYoutube(this.#url);
     } else if (domain.includes('instagram.com')) {
-      source = await downloadFromInstagram(this.#url);
+      result = await downloadFromInstagram(this.#url);
     } else {
       console.log('Unsupported video platform');
     }
 
-    if (source) {
-      return {
-        "message": "success",
-        "source": source
-      }
-    } else {
-      return {
-        "message": "failed",
-        "source": null
-      }
-    }
+      return result
 
 
 
