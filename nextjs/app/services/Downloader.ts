@@ -4,7 +4,7 @@ import { downloadFromTiktok } from "./Tiktok"
 import { downloadFromYoutube } from "./Youtube"
 
 export interface IDownloader {
-  getSource(url: string): Promise<any>
+  download(url: string): Promise<any>
   getMetaData?(url: string): Promise<any>
 }
 
@@ -16,7 +16,7 @@ export class Downloader implements IDownloader {
     this.#url = url
   }
 
-  async getSource() : Promise<any> {
+  async download() : Promise<any> {
     const domain = new URL(this.#url).hostname.toLowerCase()
     let result
     if (domain.includes('tiktok.com')) {

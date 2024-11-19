@@ -12,7 +12,7 @@ export async function sendMessage(chatId: string, text: string) {
   }
 }
 
-export const sendSubscriptionPrompt = async (chatId : string) => {
+export const sendSubscriptionPrompt = async (chatId: string) => {
   await axios.post(`${TELEGRAM_API_URL}/sendMessage`, {
     chat_id: chatId,
     text: "You need to subscribe to our channel to get more coins!",
@@ -29,7 +29,7 @@ export const sendSubscriptionPrompt = async (chatId : string) => {
   });
 };
 
-export async function sendImageToTelegram(chatId : string, imageUrl : string) {
+export async function sendImageToTelegram(chatId: string, imageUrl: string) {
   try {
     const response = await axios.post(TELEGRAM_API_URL + "/sendPhoto", {
       chat_id: chatId,
@@ -40,6 +40,26 @@ export async function sendImageToTelegram(chatId : string, imageUrl : string) {
     console.log(response)
 
     // Check for a successful response
+    if (response.data.ok) {
+      console.log('Image sent successfully!');
+    } else {
+      console.error('Failed to send image:', response.data.description);
+    }
+  } catch (error) {
+    console.error('Error sending image:', error);
+  }
+}
+
+export async function sendVideoToTelegram(chatId: string, url: string) {
+  try {
+    const response = await axios.post(TELEGRAM_API_URL + "/sendVideo", {
+      chat_id: chatId,
+      video: url,  // URL of the image
+      caption: '',  // Optional caption
+    });
+
+    console.log(response)
+
     if (response.data.ok) {
       console.log('Image sent successfully!');
     } else {
